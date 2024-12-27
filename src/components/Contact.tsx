@@ -67,21 +67,27 @@ function Contact() {
             <div className="form-flex">
               <TextField
                 required
-                id="outlined-required"
+                id="outlined-required-name"
                 label="Your Name"
                 placeholder="What's your name?"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  console.log('Name input:', e.target.value);
+                  setName(e.target.value);
+                }}
                 error={nameError}
                 helperText={nameError ? 'Please enter your name' : ''}
               />
               <TextField
                 required
-                id="outlined-required"
+                id="outlined-required-email"
                 label="Email / Phone"
                 placeholder="How can I reach you?"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  console.log('Email input:', e.target.value);
+                  setEmail(e.target.value);
+                }}
                 error={emailError}
                 helperText={emailError ? 'Please enter your email or phone number' : ''}
               />
@@ -95,7 +101,10 @@ function Contact() {
               rows={10}
               className="body-form"
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={(e) => {
+                console.log('Message input:', e.target.value);
+                setMessage(e.target.value);
+              }}
               error={messageError}
               helperText={messageError ? 'Please enter the message' : ''}
             />
