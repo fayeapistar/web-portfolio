@@ -11,11 +11,8 @@
     float: right;
     background-color: white;
     color: #050f0b;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: none;
+    font-family: 'DomaineDispNar-Medium', sans-serif;
   }
 
   button:hover {
@@ -25,25 +22,18 @@
 
   fieldset {
     background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
   }
 }
 
 label {
   font-size: 1.2rem;
   font-family: 'DomaineDispNar-Medium', sans-serif;
-  color: #333;
 }
 
 .form-flex {
   display: flex;
   gap: 15px;
   padding-bottom: 15px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 }
 
 .form-flex .MuiFormControl-root {
@@ -52,26 +42,53 @@ label {
 
 form {
   width: 100% !important;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .body-form {
   width: 100% !important;
   margin-bottom: 15px !important;
-
-  textarea {
-    width: 100%;
-  }
 }
 
-.error {
-  color: red;
-  font-size: 0.9rem;
+.contact-wrapper h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
 }
 
-.success {
-  color: green;
-  font-size: 0.9rem;
+.contact-wrapper p {
+  font-size: 1rem;
+  color: #6c6c6c;
+  margin-bottom: 20px;
+}
+
+button[type="submit"] {
+  background-color: #5000ca;
+  color: white;
+  text-transform: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+button[type="submit"]:hover {
+  background-color: #6200ea;
+  color: white;
+}
+
+.MuiTextField-root {
+  width: 100%;
+}
+
+.MuiTextField-root .MuiInputLabel-root {
+  font-size: 1rem;
+  font-family: 'DomaineDispNar-Medium', sans-serif;
+}
+
+.MuiTextField-root .MuiInputBase-root {
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.MuiTextField-root .MuiFormHelperText-root {
+  font-size: 0.8rem;
 }

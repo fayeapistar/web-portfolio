@@ -1,91 +1,112 @@
 import React, { useState } from 'react';
 import '../assets/styles/Contact.scss';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import SendIcon from '@mui/icons-material/Send';
+import TextField from '@mui/material/TextField';
 
-const ContactForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+function Contact() {
+  const [name, setName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [message, setMessage] = useState<string>('');
 
-  const [status, setStatus] = useState<string | null>(null);
+  const [nameError, setNameError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [messageError, setMessageError] = useState<boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus(null);
 
-    try {
-      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+    setNameError(name === '');
+    setEmailError(email === '');
+    setMessageError(message === '');
 
-      if (response.ok) {
-        setStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('error');
+    if (name && email && message) {
+      const formData = {
+        name,
+        email,
+        message,
+      };
+
+      try {
+        const response = await fetch('https://formspree.io/f/movvjpjy', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+          console.log('Form submitted successfully!');
+          setName('');
+          setEmail('');
+          setMessage('');
+        } else {
+          console.error('Form submission failed.');
+        }
+      } catch (error) {
+        console.error('An error occurred:', error);
       }
-    } catch {
-      setStatus('error');
     }
   };
 
   return (
-    <div className="contact_wrapper">
-      <form onSubmit={handleSubmit} className="contact-form">
-        <div className="form-flex">
-          <div className="MuiFormControl-root">
-            <label htmlFor="name">Your Name *</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
+    <div id="contact">
+      <div className="items-container">
+        <div className="contact_wrapper">
+          <h1>Contact Me</h1>
+          <p>Got a project waiting to be realized? Let's collaborate and make it happen!</p>
+          <Box
+            component="form"
+            noValidate
+            autoComplete="off"
+            className="contact-form"
+            onSubmit={handleSubmit}
+          >
+            <div className="form-flex">
+              <TextField
+                required
+                id="outlined-required"
+                label="Your Name"
+                placeholder="What's your name?"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                error={nameError}
+                helperText={nameError ? 'Please enter your name' : ''}
+              />
+              <TextField
+                required
+                id="outlined-required"
+                label="Email / Phone"
+                placeholder="How can I reach you?"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                error={emailError}
+                helperText={emailError ? 'Please enter your email or phone number' : ''}
+              />
+            </div>
+            <TextField
               required
+              id="outlined-multiline-static"
+              label="Message"
+              placeholder="Send me any inquiries or questions"
+              multiline
+              rows={10}
+              className="body-form"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              error={messageError}
+              helperText={messageError ? 'Please enter the message' : ''}
             />
-          </div>
-          <div className="MuiFormControl-root">
-            <label htmlFor="email">Email / Phone *</label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+            <Button type="submit" variant="contained" endIcon={<SendIcon />}>
+              Send
+            </Button>
+          </Box>
         </div>
-        <div className="body-form">
-          <label htmlFor="message">Message *</label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <p className="error">All fields are required.</p>
-        <button type="submit">SEND &gt;</button>
-
-        {status === 'success' && (
-          <p className="success">Message sent successfully!</p>
-        )}
-        {status === 'error' && (
-          <p className="error">Something went wrong. Please try again.</p>
-        )}
-      </form>
+      </div>
     </div>
   );
-};
+}
 
-export default ContactForm;
+export default Contact;
