@@ -24,13 +24,19 @@ function Contact() {
   };
 
   if (formSubmitted) {
-    return <p>Thank you for your message! I'll get back to you soon.</p>;
+    return (
+      <div id="contact">
+        <div className="thank-you-message">
+          <p>Thank you for your message! I'll get back to you soon.</p>
+        </div>
+      </div>
+    );
   }
 
   return (
     <div id="contact">
       <div className="items-container">
-        <div className="contact_wrapper">
+        <div className="contact-wrapper">
           <h1>Contact Me</h1>
           <p>Got a project waiting to be realized? Let's collaborate and make it happen!</p>
           <Box
@@ -50,7 +56,7 @@ function Contact() {
                 placeholder="What's your name?"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                name="name" 
+                name="name"
               />
               <TextField
                 required
@@ -59,7 +65,7 @@ function Contact() {
                 placeholder="How can I reach you?"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                name="email" 
+                name="email"
               />
             </div>
             <TextField
