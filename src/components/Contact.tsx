@@ -12,15 +12,32 @@ function Contact() {
   const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!name || !email || !message) {
       setError('All fields are required.');
       return;
     }
 
     setError(null);
-    setFormSubmitted(true);
+
+    try {
+      // Formspree API submission
+      const response = await fetch('https://formspree.io/f/xeooebaw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (response.ok) {
+        setFormSubmitted(true);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setError('Failed to send your message. Please check your connection.');
+    }
   };
 
   if (formSubmitted) {
@@ -44,14 +61,12 @@ function Contact() {
             noValidate
             autoComplete="off"
             className="contact-form"
-            action="https://formspree.io/f/xeooebaw"
-            method="POST"
             onSubmit={handleSubmit}
           >
             <div className="form-flex">
               <TextField
                 required
-                id="outlined-required"
+                id="outlined-name"
                 label="Your Name"
                 placeholder="What's your name?"
                 value={name}
@@ -60,7 +75,7 @@ function Contact() {
               />
               <TextField
                 required
-                id="outlined-required"
+                id="outlined-email"
                 label="Email / Phone"
                 placeholder="How can I reach you?"
                 value={email}
@@ -70,7 +85,7 @@ function Contact() {
             </div>
             <TextField
               required
-              id="outlined-multiline-static"
+              id="outlined-message"
               label="Message"
               placeholder="Send me any inquiries or questions"
               multiline
