@@ -25,7 +25,7 @@ const ContactForm = () => {
                             type="text"
                             id="email"
                             name="email"
-                            placeholder="Email / Phone"
+                            placeholder="Email"
                             required
                             style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
                         />
