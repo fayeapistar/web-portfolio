@@ -23,7 +23,6 @@ function Contact() {
     setError(null);
 
     try {
-      // Formspree API submission
       const response = await fetch('https://formspree.io/f/xeooebaw', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
