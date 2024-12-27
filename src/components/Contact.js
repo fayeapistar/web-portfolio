@@ -20,7 +20,7 @@ const ContactForm = () => {
                         />
                     </div>
                     <div className="MuiTextField-root" style={{ flex: '1' }}>
-                        <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem' }}>Email / Phone</label>
+                        <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem' }}>Email</label>
                         <input
                             type="text"
                             id="email"
