@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import '../assets/styles/Contact.scss'; 
 
-const ContactForm: React.FC = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: '',
+  });
 
-    const form = event.currentTarget;
-    const formData = new FormData(form);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-    fetch('https://formspree.io/f/movvjpjy', {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formDataObject = new FormData(form);
+
+    fetch('https://formspree.io/f/yourFormspreeID', {
       method: 'POST',
-      body: formData,
+      body: formDataObject,
       headers: {
         'Accept': 'application/json',
       },
@@ -20,6 +32,7 @@ const ContactForm: React.FC = () => {
         if (response.ok) {
           alert('Thank you for your message!');
           form.reset();
+          setFormData({ firstName: '', lastName: '', email: '', message: '' });
         } else {
           alert('Something went wrong. Please try again later.');
         }
@@ -38,12 +51,16 @@ const ContactForm: React.FC = () => {
           <TextField
             label="First Name"
             name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
             required
             className="MuiTextField-root"
           />
           <TextField
             label="Last Name"
             name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
             required
             className="MuiTextField-root"
           />
@@ -52,6 +69,8 @@ const ContactForm: React.FC = () => {
           label="Email"
           name="email"
           type="email"
+          value={formData.email}
+          onChange={handleChange}
           required
           className="MuiTextField-root body-form"
         />
@@ -60,6 +79,8 @@ const ContactForm: React.FC = () => {
           name="message"
           multiline
           rows={4}
+          value={formData.message}
+          onChange={handleChange}
           required
           className="MuiTextField-root body-form"
         />
