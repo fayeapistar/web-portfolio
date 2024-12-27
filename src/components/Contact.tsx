@@ -6,48 +6,40 @@ import SendIcon from '@mui/icons-material/Send';
 import TextField from '@mui/material/TextField';
 
 function Contact() {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
-  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!name || !email || !message) {
-      setError('All fields are required.');
-      return;
-    }
-
-    setError(null);
-
+    setStatus("Submitting...");
     try {
-      const response = await fetch('https://formspree.io/f/xeooebaw', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message }),
+      const response = await fetch("https://formspree.io/f/xeooebaw", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        setFormSubmitted(true);
+        setStatus("Thanks for your message!");
+        setFormData({ name: "", email: "", message: "" });
       } else {
-        setError('Something went wrong. Please try again.');
+        setStatus("Oops! Something went wrong. Please try again.");
       }
-    } catch (err) {
-      setError('Failed to send your message. Please check your connection.');
+    } catch (error) {
+      setStatus("There was an error submitting the form.");
     }
   };
-
-  if (formSubmitted) {
-    return (
-      <div id="contact">
-        <div className="thank-you-message">
-          <p>Thank you for your message! I'll get back to you soon.</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div id="contact">
@@ -68,11 +60,8 @@ function Contact() {
                 id="outlined-name"
                 label="Your Name"
                 placeholder="What's your name?"
-                value={name}
-                onChange={(e) => {
-                  console.log('Name input changed:', e.target.value); 
-                  setName(e.target.value);
-                }}
+                value={formData.name}
+                onChange={handleChange}
                 name="name"
               />
               <TextField
@@ -80,11 +69,8 @@ function Contact() {
                 id="outlined-email"
                 label="Email / Phone"
                 placeholder="How can I reach you?"
-                value={email}
-                onChange={(e) => {
-                  console.log('Email input changed:', e.target.value); 
-                  setEmail(e.target.value);
-                }}
+                value={formData.email}
+                onChange={handleChange}
                 name="email"
               />
             </div>
@@ -96,14 +82,11 @@ function Contact() {
               multiline
               rows={10}
               className="body-form"
-              value={message}
-              onChange={(e) => {
-                console.log('Message input changed:', e.target.value); 
-                setMessage(e.target.value);
-              }}
+              value={formData.message}
+              onChange={handleChange}
               name="message"
             />
-            {error && <p className="error">{error}</p>}
+            <p className="status">{status}</p>
             <Button variant="contained" endIcon={<SendIcon />} type="submit">
               Send
             </Button>
