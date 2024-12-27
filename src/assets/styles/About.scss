@@ -1,0 +1,64 @@
+#about {
+  text-align: center;
+  padding: 40px;
+
+  .about-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .vertical-about {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .vertical-item {
+      padding: 20px;
+      border-left: 4px solid #5F00BA;
+      margin: 10px 0;
+      background-color: #F1F0EA;
+      transition: background-color 0.3s ease;
+      display: flex;
+      gap: 15px;
+
+      &:hover {
+        background-color: #FFF2F1; /* Light green on hover */
+      }
+
+      .career-icon {
+        color: #4caf50;
+        font-size: 1.5rem;
+        margin-top: 5px;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        color: #333;
+      }
+
+      h4,
+      span {
+        font-size: 1rem;
+        color: #777;
+        margin: 5px 0;
+      }
+
+      p {
+        font-size: 1rem;
+        color: #666;
+        margin-top: 10px;
+      }
+    }
+  }
+}
