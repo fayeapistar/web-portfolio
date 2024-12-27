@@ -21,7 +21,7 @@ function About() {
           <div className="vertical-item">
             <div>
               <h3>Achievements</h3>
-              <h4>Dean's Lister, 1nd semester</h4>
+              <h4>Dean's Lister, 1st semester</h4>
               <span>2022-2023</span>
               <h4>Dean's Lister, 1st semester</h4>
               <span>2023-2024</span>
