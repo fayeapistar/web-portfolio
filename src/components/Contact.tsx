@@ -69,7 +69,10 @@ function Contact() {
                 label="Your Name"
                 placeholder="What's your name?"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  console.log('Name input changed:', e.target.value); 
+                  setName(e.target.value);
+                }}
                 name="name"
               />
               <TextField
@@ -78,7 +81,10 @@ function Contact() {
                 label="Email / Phone"
                 placeholder="How can I reach you?"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  console.log('Email input changed:', e.target.value); 
+                  setEmail(e.target.value);
+                }}
                 name="email"
               />
             </div>
@@ -91,7 +97,10 @@ function Contact() {
               rows={10}
               className="body-form"
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={(e) => {
+                console.log('Message input changed:', e.target.value); 
+                setMessage(e.target.value);
+              }}
               name="message"
             />
             {error && <p className="error">{error}</p>}
