@@ -60,6 +60,7 @@ form {
 .body-form {
   width: 100% !important;
   margin-bottom: 15px !important;
+
   textarea {
     width: 100%;
   }
@@ -67,5 +68,10 @@ form {
 
 .error {
   color: red;
+  font-size: 0.9rem;
+}
+
+.success {
+  color: green;
   font-size: 0.9rem;
 }
